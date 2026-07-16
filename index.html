@@ -244,7 +244,7 @@
   revealEls.forEach(el => {
     if (el.matches('.card, .service-item, .work-card') && el.parentElement) {
       const idx = Array.prototype.indexOf.call(el.parentElement.children, el);
-      el.style.animationDelay = Math.min(idx, 5) * 90 + 'ms';
+      el.style.animationDelay = Math.min(idx, 5) * 160 + 'ms';
     }
   });
   if ('IntersectionObserver' in window) {

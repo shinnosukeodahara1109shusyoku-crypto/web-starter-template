@@ -166,7 +166,7 @@ ul { list-style: none; }
   to   { opacity: 1; transform: none; }
 }
 .has-js .animate-in {
-  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: revealUp 2.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 /* 動きを控えたい設定の人には演出をオフ（アクセシビリティ配慮） */
 @media (prefers-reduced-motion: reduce) {
