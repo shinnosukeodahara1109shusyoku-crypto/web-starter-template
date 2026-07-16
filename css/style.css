@@ -157,6 +157,22 @@ ul { list-style: none; }
 .footer-nav a:hover { color: var(--pop-yellow); }
 .copyright { font-family: var(--font-en); font-size: 12px; color: #7f93c4; }
 
+/* ══════════ スクロール演出（フェード＋スライドイン） ══════════
+   ★フェイルオープン設計：要素は最初から「見える」状態。
+   画面に入ったら .animate-in が付いて、ふわっと入ってくる演出を“再生”する。
+   もしJSやスクロール検知が効かなくても、中身は普通に見えるので安全。 */
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: none; }
+}
+.has-js .animate-in {
+  animation: revealUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+/* 動きを控えたい設定の人には演出をオフ（アクセシビリティ配慮） */
+@media (prefers-reduced-motion: reduce) {
+  .has-js .animate-in { animation: none; }
+}
+
 /* ══════════ レスポンシブ ══════════ */
 @media (max-width: 960px) {
   .card-grid, .works-grid { grid-template-columns: repeat(2, 1fr); }

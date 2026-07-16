@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- JS有効時だけスクロール演出を効かせる目印（表示のちらつき防止のため先頭で付与） -->
+<script>document.documentElement.classList.add('has-js');</script>
 
 <!-- ═══ TODO: 案件ごとに書き換え ═══ -->
 <title>サイトタイトル | 屋号</title>
@@ -233,6 +235,27 @@
   document.querySelectorAll('.global-nav a').forEach(a => {
     a.addEventListener('click', () => { if (toggle) toggle.checked = false; });
   });
+
+  // ── スクロール演出：画面に入った要素を“ふわっと再生” ──
+  // ※ 要素は最初から見えている（フェイルオープン）。検知できたら animate-in を付けて演出するだけ。
+  const revealSel = '.section-eyebrow, .section-title, .section-lead, .card, .service-item, .work-card, .contact-form';
+  const revealEls = document.querySelectorAll(revealSel);
+  // グリッド内のカードは少しずつ遅らせて“流れる”ように
+  revealEls.forEach(el => {
+    if (el.matches('.card, .service-item, .work-card') && el.parentElement) {
+      const idx = Array.prototype.indexOf.call(el.parentElement.children, el);
+      el.style.animationDelay = Math.min(idx, 5) * 90 + 'ms';
+    }
+  });
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('animate-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+    revealEls.forEach(el => io.observe(el));
+  }
+  // IntersectionObserver 非対応環境では何もしない＝最初から見えているのでOK
 })();
 </script>
 
